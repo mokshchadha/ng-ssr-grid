@@ -8,6 +8,11 @@
       placeholder="{{ c.label }}"
       value="{{ c.defaultValue ? c.defaultValue : '' }}"
     />
+    <button mat-button matSuffix (click)="toggleSortOrder(c.field)">
+      <mat-icon>{{
+        c.sorting === "ASC" ? "arrow_upward" : "arrow_downward"
+      }}</mat-icon>
+    </button>
   </mat-form-field>
   <br />
   }
