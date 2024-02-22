@@ -7,6 +7,7 @@
       formControlName="{{ c.field }}"
       placeholder="{{ c.label }}"
       value="{{ c.defaultValue ? c.defaultValue : '' }}"
+      type="{{ c.type }}"
     />
     <button mat-button matSuffix (click)="toggleSortOrder(c.field)">
       <mat-icon>{{

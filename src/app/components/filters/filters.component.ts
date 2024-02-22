@@ -1,9 +1,18 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  WritableSignal,
+  inject,
+  signal,
+} from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import _ from 'lodash';
+import { FilterColumn, DataService } from '../data.service';
 
 @Component({
   selector: 'app-filters',
@@ -18,52 +27,48 @@ import _ from 'lodash';
   styleUrl: './filters.component.css',
 })
 export class FiltersComponent implements OnInit, OnDestroy {
+  @Input() debounceInterval: number = 750;
   signUpForm: FormGroup = new FormGroup({});
-  columns = [
-    {
-      label: 'Order No',
-      field: 'order',
-      sorting: 'ASC',
-      type: 'text',
-      defaultValue: '',
-    },
-    {
-      label: 'Quantity',
-      field: 'quantity',
-      sorting: 'ASC',
-      type: 'number',
-      defaultValue: '',
-    },
-  ];
+  columns: Array<FilterColumn> = [];
+
+  constructor(private dataService: DataService) {}
 
   toggleSortOrder(field: string) {
-    console.log({ field });
-    const selectedField = this.columns.filter((e) => e.field === field);
-    console.log({ selectedField });
-    this.columns = this.columns.slice().map((e) => {
-      if (e.field === field) {
-        return { ...e, sorting: e.sorting === 'ASC' ? 'DESC' : 'ASC' };
-      }
-      return e;
-    });
+    const newColumns: FilterColumn[] = this.columns
+      .slice()
+      .map((e: FilterColumn) => {
+        return e.field === field
+          ? { ...e, sorting: e.sorting === 'ASC' ? 'DESC' : 'ASC' }
+          : e;
+      });
+    this.dataService.updateFilters(newColumns);
   }
 
-  ngOnInit(): void {
+  getControllers(columns: FilterColumn[]) {
     let controllers: any = {};
-    for (let c of this.columns) {
+    for (let c of columns) {
       const fieldName = c.field;
       controllers[fieldName] = new FormControl();
     }
+    return controllers;
+  }
 
-    console.log({ controllers });
+  ngOnInit(): void {
+    this.columns = this.dataService.getFilters();
+    const controllers = this.getControllers(this.columns);
     this.signUpForm = new FormGroup(controllers);
 
+    const debounceSearch = _.debounce((formValues) => {
+      const newFilters = this.columns.map((e) => ({
+        ...e,
+        sorting: e.sorting,
+        value: formValues[e.field],
+      }));
+      this.dataService.updateFilters(newFilters);
+    }, this.debounceInterval);
+
     this.signUpForm.valueChanges.subscribe((e) => {
-      function search() {
-        console.log('Searching for:', e);
-      }
-      const debounceSearch = _.debounce(search, 1500);
-      debounceSearch();
+      debounceSearch(e);
     });
   }
 
