@@ -15,4 +15,28 @@ export const DEFAULT_COLUMNS = [
     defaultValue: '',
     value: '',
   },
+  {
+    label: 'Name',
+    field: 'name',
+    sorting: 'ASC',
+    type: 'text',
+    defaultValue: '',
+    value: '',
+  },
+  {
+    label: 'Age',
+    field: 'age',
+    sorting: 'ASC',
+    type: 'number',
+    defaultValue: '',
+    value: '',
+  },
+  {
+    label: 'Gender',
+    field: 'gender',
+    sorting: 'ASC',
+    type: 'text',
+    defaultValue: '',
+    value: '',
+  },
 ];
