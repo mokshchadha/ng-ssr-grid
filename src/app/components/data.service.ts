@@ -2,6 +2,7 @@ import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { DEFAULT_COLUMNS } from '../constants';
+import { TableRow } from '../models/table-row.model';
 
 export interface FilterColumn {
   label: string;
@@ -16,9 +17,9 @@ export interface FilterColumn {
   providedIn: 'root',
 })
 export class DataService {
-  private filtersData = signal<FilterColumn[]>(DEFAULT_COLUMNS);
+  filtersData = signal<FilterColumn[]>(DEFAULT_COLUMNS);
 
-  tablesData = [];
+  tablesData = signal<TableRow[]>([]);
   private baseUrl: string = '';
 
   constructor(private http: HttpClient) {
@@ -38,14 +39,15 @@ export class DataService {
     fetch(url).then(async (e) => {
       const data = await e.json();
       console.log('data in fetch ', data);
-      this.tablesData = data;
+      this.tablesData.set(data);
+      console.log({ data: this.tablesData() });
     });
 
     return this.http.get<any>(this.baseUrl).pipe(
       //TODO: use proper http client in standalone component
       tap((data) => {
         console.log('tables data ', data);
-        this.tablesData = data;
+        this.tablesData.set(data);
       })
     );
   }
