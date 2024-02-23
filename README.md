@@ -14,7 +14,7 @@ This project demonstrates the use of Angular 17 to create a dynamic table that q
 ## Technologies Used
 
 - Angular 17
-- Backend server (not specified)
+- Backend server (I have created a temporary server in server/ but you can simply integrate your end point to your servers)
 - Other libraries for debounce and pagination (specific libraries not specified)
 
 ## Installation
