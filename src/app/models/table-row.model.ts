@@ -1,7 +1,8 @@
 export interface TableRow {
-  orderNo: string;
-  quantity: number;
   name: string;
-  age: number;
-  gender: 'M' | 'F'; // Assuming gender can be 'M' or 'F'
+  email: string;
+  country: string;
+  region: string;
+  zip: string;
+  isUser: 'Yes' | 'No'; // Assuming isUser can be 'Yes' or 'No'
 }

@@ -18,8 +18,9 @@ export interface FilterColumn {
 })
 export class DataService {
   filtersData = signal<FilterColumn[]>(DEFAULT_COLUMNS);
-
   tablesData = signal<TableRow[]>([]);
+  currentPage = signal<number>(0);
+
   private baseUrl: string = '';
 
   constructor(private http: HttpClient) {
@@ -59,5 +60,15 @@ export class DataService {
 
   getFilters() {
     return this.filtersData().slice();
+  }
+
+  incrementPage() {
+    this.currentPage.update((e) => e + 1);
+  }
+
+  decrementPage() {
+    if (this.currentPage() > 0) {
+      this.currentPage.update((e) => e - 1);
+    }
   }
 }
