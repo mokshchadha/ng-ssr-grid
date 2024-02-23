@@ -20,20 +20,14 @@ This project demonstrates the use of Angular 17 to create a dynamic table that q
 ## Installation
 
 1. Clone the repository:
-   ```bash
-   git clone [https://github.com/mokshchadha/ng-ssr-grid.git](https://github.com/mokshchadha/ng-ssr-grid/)
-   ```  
+  `git clone [https://github.com/mokshchadha/ng-ssr-grid.git](https://github.com/mokshchadha/ng-ssr-grid/)`
 
 2. Install dependencies for angular:
-   ```bash
-  cd ng-ssr-grid
-  npm install
-   ```
+   `cd ng-ssr-grid`
+   `npm install`
 
 3. Start Angular Server:
-   ```bash
-   git clone https://github.com/your-username/your-repository.git
-   ```
+   `ng serve`
 
 4. Go Check:
    `http://localhost:4200`
