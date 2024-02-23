@@ -70,6 +70,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
     this.signUpForm.valueChanges.subscribe((e) => {
       debounceSearch(e);
     });
+    debounceSearch({});
   }
 
   ngOnDestroy(): void {}

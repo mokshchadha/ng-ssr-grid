@@ -11,6 +11,8 @@ import { MatTableModule } from '@angular/material/table';
 })
 export class TableComponent implements OnInit {
   dataService = inject(DataService);
-  displayedColumns = ['orderNo', 'quantity', 'name', 'age', 'gender'];
+  displayedColumns = computed(() =>
+    this.dataService.filtersData().map((e) => e.field)
+  );
   ngOnInit(): void {}
 }
