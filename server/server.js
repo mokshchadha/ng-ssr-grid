@@ -17,7 +17,7 @@ app.get("/query", (req, res) => {
   const queryParams = req.query;
   const { pageNumber, filterCriteria } = parseQueryParams(queryParams);
   const filteredUsers = filterUserInfo(data, filterCriteria);
-  const pageSize = 10;
+  const pageSize = 13;
   const paginatedUsers = paginateUserInfo(filteredUsers, pageNumber, pageSize);
   res.send(paginatedUsers);
 });
